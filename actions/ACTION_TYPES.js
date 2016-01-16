@@ -1,3 +1,4 @@
 export default {
-    NAVIGATION: "@@navigation"
+    NAVIGATION: "@@navigation",
+    GET_LIST: "@@get_list"
 }

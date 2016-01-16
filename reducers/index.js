@@ -9,5 +9,18 @@ const navigationReducer = handleActions({
 
 
 export default combineReducers({
-    navigation: navigationReducer
+    navigation: navigationReducer,
+    aList: function (state, action) {
+        if (action.type === T.GET_LIST) {
+            return {
+                isFetching: false,
+                data: Object.assign({}, state.data, action.data)
+            }
+        } else {
+            return (state || {
+                isFetching: false,
+                data: {}
+            })
+        }
+    }
 });

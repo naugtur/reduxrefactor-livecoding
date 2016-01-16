@@ -8,3 +8,14 @@ export function navigate() {
         location: ROUTES.lookup(window.location.hash.substr(1)),
     }
 }
+
+
+
+export function getList() {
+    return {
+        type: T.GET_LIST,
+        data: {
+            list:["foo","bar","baz"]
+        }
+    }
+}
