@@ -23,54 +23,26 @@ function createReducerFunction(stateKey, reducers) {
 
 }
 
-const listReducer = handleActions({
-    [T.LIST_REQUEST_START]: (state) => {
+const requestReducerSetup = {
+    [T.REQUEST_START]: (state) => {
         return Object.assign({}, state, {
             isFetching: true
         })
     },
-    [T.LIST_REQUEST_END]: (state, {data}) => ({
+    [T.REQUEST_END]: (state, {data}) => ({
             isFetching: false,
             data: Object.assign({}, state.data, data)
     }),
-    [T.LIST_REQUEST_ERROR]: (state, {error}) => {
+    [T.REQUEST_ERROR]: (state, {error}) => {
         return Object.assign({}, state, {
             isFetching: false,
             error
         })
     }
-}, {
-    isFetching: false,
-    data: {}
-});
-
-
-const itemReducer = handleActions({
-    [T.ITEM_REQUEST_START]: (state) => {
-        return Object.assign({}, state, {
-            isFetching: true
-        })
-    },
-    [T.ITEM_REQUEST_END]: (state, {data}) => ({
-            isFetching: false,
-            data: Object.assign({}, state.data, data)
-    }),
-    [T.ITEM_REQUEST_ERROR]: (state, {error}) => {
-        return Object.assign({}, state, {
-            isFetching: false,
-            error
-        })
-    }
-}, {
-    isFetching: false,
-    data: {}
-});
-
-
-
+}
 
 export default combineReducers({
     navigation: navigationReducer,
-    aList: listReducer,
-    aItems: itemReducer
+    aList: createReducerFunction("aList", requestReducerSetup),
+    aItems: createReducerFunction("aItems", requestReducerSetup)
 });
