@@ -42,12 +42,39 @@ const listReducers = {
 }
 
 
+const itemReducers = {
+    [T.ITEM_REQUEST_START]: (state) => {
+        return Object.assign({}, state, {
+            isFetching: true
+        })
+    },
+    [T.ITEM_REQUEST_END]: (state, {data}) => ({
+            isFetching: false,
+            data: Object.assign({}, state.data, data)
+    }),
+    [T.ITEM_REQUEST_ERROR]: (state, {error}) => {
+        return Object.assign({}, state, {
+            isFetching: false,
+            error
+        })
+    }
+}
 
 export default combineReducers({
     navigation: navigationReducer,
     aList: function (state, action) {
         if (listReducers[action.type]) {
             return listReducers[action.type](state, action)
+        } else {
+            return (state || {
+                isFetching: false,
+                data: {}
+            })
+        }
+    },
+    aItems:  function (state, action) {
+        if (itemReducers[action.type]) {
+            return itemReducers[action.type](state, action)
         } else {
             return (state || {
                 isFetching: false,
