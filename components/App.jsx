@@ -1,6 +1,6 @@
 import React from "react"
 import {connect} from "react-redux";
-import { getList } from "../actions"
+import { fetchList } from "../actions"
 import AList from "./AList.jsx";
 import AItem from "./AItem.jsx";
 
@@ -9,7 +9,7 @@ function App(props) {
     switch (props.location.name) {
     case "root" :
         setTimeout(function(){
-            props.dispatch(getList())
+            props.dispatch(fetchList())
         },0)
         return <AList/>
     case "aItem" :

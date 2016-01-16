@@ -11,11 +11,43 @@ export function navigate() {
 
 
 
-export function getList() {
+export function fetchList() {
+    return function (dispatch) {
+        dispatch({
+            type: T.LIST_REQUEST_START
+        })
+        return fetch("/api/list")
+            .then(function(response){
+                    if(response.status !== 200){
+                        return response.text().then(function(message){
+                            var error = Error(message)
+                            error.status = response.status
+                            throw error
+                        })
+                    }
+                    return response
+                })
+            .then(response => response.json())
+            .then(function success(body){
+                return dispatch(receiveList(body))
+            })
+            .catch(function failure(error){
+                return dispatch(listError(error))
+            })
+    }
+}
+
+export function receiveList(data) {
     return {
-        type: T.GET_LIST,
-        data: {
-            list:["foo","bar","baz"]
-        }
+        type: T.LIST_REQUEST_END,
+        data,
+        fetchedAt: Date.now()
+    }
+}
+
+export function listError(error, stateKey) {
+    return {
+        type: T.LIST_REQUEST_ERROR,
+        error
     }
 }
