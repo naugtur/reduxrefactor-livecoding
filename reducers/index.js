@@ -23,7 +23,7 @@ function createReducerFunction(stateKey, reducers) {
 
 }
 
-const listReducers = {
+const listReducer = handleActions({
     [T.LIST_REQUEST_START]: (state) => {
         return Object.assign({}, state, {
             isFetching: true
@@ -39,10 +39,13 @@ const listReducers = {
             error
         })
     }
-}
+}, {
+    isFetching: false,
+    data: {}
+});
 
 
-const itemReducers = {
+const itemReducer = handleActions({
     [T.ITEM_REQUEST_START]: (state) => {
         return Object.assign({}, state, {
             isFetching: true
@@ -58,28 +61,16 @@ const itemReducers = {
             error
         })
     }
-}
+}, {
+    isFetching: false,
+    data: {}
+});
+
+
+
 
 export default combineReducers({
     navigation: navigationReducer,
-    aList: function (state, action) {
-        if (listReducers[action.type]) {
-            return listReducers[action.type](state, action)
-        } else {
-            return (state || {
-                isFetching: false,
-                data: {}
-            })
-        }
-    },
-    aItems:  function (state, action) {
-        if (itemReducers[action.type]) {
-            return itemReducers[action.type](state, action)
-        } else {
-            return (state || {
-                isFetching: false,
-                data: {}
-            })
-        }
-    }
+    aList: listReducer,
+    aItems: itemReducer
 });
