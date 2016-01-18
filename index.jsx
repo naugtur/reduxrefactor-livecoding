@@ -8,12 +8,13 @@ import { Provider } from "react-redux";
 import { createStore, applyMiddleware } from "redux";
 import logger from "redux-logger";
 import thunk from "redux-thunk";
+import {createRequestMiddleware} from "redux-request-middleware";
 
 import * as actions from "./actions";
 import reducer from "./reducers";
 import App from "./components/App.jsx";
 
-const middleware = [thunk, logger()];
+const middleware = [thunk, createRequestMiddleware(), logger()];
 const createStoreWithMiddleware = applyMiddleware(...middleware)(createStore);
 const store = createStoreWithMiddleware(reducer);
 

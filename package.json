@@ -24,7 +24,9 @@
     "redux-actions": "^0.9.0",
     "redux-logger": "^2.0.4",
     "redux-request-generator": "1.0.0-rc.1",
+    "redux-request-middleware": "^0.4.2",
     "redux-thunk": "^1.0.0",
+    "superagent": "^1.6.1",
     "uniloc": "^0.2.0"
   }
 }
